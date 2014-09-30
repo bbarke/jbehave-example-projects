@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+  <bean id="driverProvider" class="org.jbehave.web.selenium.FirefoxWebDriverProvider" >
+  </bean>
+
+  <bean id="storyBuilder" class="org.jbehave.core.reporters.StoryReporterBuilder" >
+  </bean>
+
+  <bean id="webDriverProvider" class="org.jbehave.web.selenium.PerStoryWebDriverSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="lifecycleSteps" class="demo.lifecycle.steps.LifecycleSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="journaledSteps" class="demo.lifecycle.steps.JournaledStoriesSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="pageFactory" class="demo.lifecycle.pages.PageFactory">
+     <constructor-arg ref="driverProvider"/>
+  </bean>  
+  
+  <bean id="etsySteps" class="demo.lifecycle.steps.EtsyDotComSteps">
+     <constructor-arg ref="pageFactory"/>
+  </bean>  
+  
+  <bean id="webDriverScreenshotOnFailure" class="org.jbehave.web.selenium.WebDriverScreenshotOnFailure">
+     <constructor-arg ref="driverProvider" />
+     <constructor-arg ref="storyBuilder" />
+  </bean>
+
+
+</beans>
